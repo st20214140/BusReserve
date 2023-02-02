@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import utl.Check;
+
 /**
  * Servlet implementation class LoginServlet
  */
@@ -36,55 +37,35 @@ public class LoginServlet extends HttpServlet {
 		String frontPath = "/WEB-INF/jsp/";
 		String fPath = "index.jsp";
 
-		String error_msg = "";
+		String error_msg = null;
 
-		String firstName = null;
-		String lastName = null;
-		String strTel = null;
-		int telNo = 0;
-		boolean regFlag = false; // 登録判別フラグ (true: 登録 / false: 確認)
+		String firstName   = null;
+		String lastName    = null;
+		String callNumber = null;
 
 		// リクエストパラメータの取得
-		try {
 			// 確認
-			firstName = request.getParameter("fName");
-			lastName = request.getParameter("lName");
-			strTel = request.getParameter("telNo");
-		} catch (Exception e1) {
-			System.out.println("「確認」の欄に入力されていません");
-			try {
-				// 登録
-				firstName = request.getParameter("fNameR");
-				lastName = request.getParameter("lNameR");
-				strTel = request.getParameter("telNoR");
-				regFlag = true;
-			} catch (Exception e2) {
-				System.out.println("「登録」の欄に入力されていません");
-			}
-		}
-
-		if (firstName == null || lastName == null || strTel == null ||
-				firstName == "" || lastName == "" || strTel == "") {
-			error_msg += "どこかの欄が抜けています\n";
-			System.out.println("どこかの欄が抜けています");
-			fPath = "index.jsp";
-		} else if (strTel.length() != 11) {
-			error_msg += "電話番号の桁が間違えています\n";
-			System.out.println("電話番号の桁が間違えています\n");
-
-			try {
-				Integer.parseInt(strTel);
-			} catch (NumberFormatException e) {
-				System.out.println(strTel);
-				error_msg += "電話番号が数値ではありません\n";
-				System.out.println("電話番号が数値ではありません\n");
-			}
-			fPath = "index.jsp";
+		firstName = request.getParameter("fName");
+		lastName = request.getParameter("lName");
+		callNumber = request.getParameter("callNumber");
+		System.out.println("「確認」の欄に入力されていません");
+		
+		// 入力チェック
+		if (firstName == null || lastName == null || callNumber == null ||
+				firstName == "" || lastName == "" || callNumber == "") {
+			error_msg = "どこかの欄が抜けています";
+		} else if (callNumber.length() != 11) {
+			error_msg = "電話番号の桁が間違えています";
 		} else {
-			System.out.println("name = " + firstName + " " + lastName + " tel = " + strTel);
-			fPath = frontPath + (regFlag ? "register.jsp" : "verification.jsp");
+			if (Check.checkString(callNumber)) {
+				System.out.println("name = " + firstName + " " + lastName + " tel = " + callNumber);
+//				fPath = frontPath + (regFlag ? "register.jsp" : "verification.jsp");
+			}else {
+				error_msg = "電話番号に文字が含まれています";
+			}
 		}
-
+		System.out.println("ERR: " + error_msg);
+		
 		// エラーメッセージの埋め込み
 		request.setAttribute("error_msg", error_msg);
 

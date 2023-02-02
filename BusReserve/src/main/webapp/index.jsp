@@ -20,7 +20,7 @@ String color2 = "#A2D2FF";
 	<%--バス予約画面 --%>
 	<div
 		style="display: inline-block; background: <%=color1%>; padding: 3px 10px; color: #ffffff;">
-		<strong>既存</strong>
+		<strong>ユーザー情報</strong>
 	</div>
 	<div style="padding: 10px; border: 2px solid <%=color1%>;">
 		<form action="LoginServlet" method="post">
@@ -28,19 +28,6 @@ String color2 = "#A2D2FF";
 			名*:<input class="text" name="lName" placeholder="太郎"><br>
 			電話番号*:<input class="text" name="telNo" placeholder="XXXYYYYZZZZ"><br>
 			<input type="submit" value="確認">
-		</form>
-	</div>
-	<br>
-	<div
-		style="display: inline-block; background: <%=color2%>; padding: 3px 10px; color: #ffffff;">
-		<strong>新規</strong>
-	</div>
-	<div style="padding: 10px; border: 2px solid <%=color2%>;">
-		<form action="LoginServlet" method="post">
-			姓*:<input class="text" name="fNameR" placeholder="バス"><br>
-			名*:<input class="text" name="lNameR" placeholder="太郎"><br>
-			電話番号*:<input class="text" name="telNoR" placeholder="XXXYYYYZZZZ"><br>
-			<input type="submit" value="登録">
 		</form>
 	</div>
 
